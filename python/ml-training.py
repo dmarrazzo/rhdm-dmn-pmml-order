@@ -8,17 +8,23 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 
-# model = Perceptron()
+# Initialize the algorithm to train
+
+# Logistic Regression (with weith tuning)
 model = LogisticRegression(class_weight ={
     "true" : .6,
     "false" : 1
 })
-# Logistic Regression can be "multinomial" or "ovr"
+# Configuration for the PMML export: multi_class can be "multinomial" or "ovr"
 model.multi_class = "ovr"
+
+# In order to test other algorithms commenting the previous lines and uncommenting one of the following
+
 # model = KNeighborsClassifier(n_neighbors=3)
 # model = svm.SVC()
 # model = GaussianNB()
 # model = DecisionTreeClassifier()
+# model = Perceptron()
 
 # Conversion utility to map the csv values in numbers for the ML algorithms 
 def convert(str):
@@ -50,8 +56,8 @@ with open("python/order-approval.csv") as f:
         })
 
 # Separate data into training and testing groups
-holdout = int(0.40 * len(data))
 random.shuffle(data)
+holdout = int(0.40 * len(data))
 testing = data[:holdout]
 training = data[holdout:]
 
@@ -106,12 +112,11 @@ print(f"True Negative Rate: {100 * specificity:.2f}%")
 from sklearn2pmml import sklearn2pmml
 from sklearn2pmml import make_pmml_pipeline
 
-##########################################
-# PMML
+# Export the trained model in PMML
 
-# pipeline = make_pmml_pipeline(
-#     model,
-#     active_fields= ["category", "urgency", "targetPrice", "price"],
-#     target_fields= ["approval"]
-# )
-# sklearn2pmml(pipeline, "order-approval.pmml")
+pipeline = make_pmml_pipeline(
+    model,
+    active_fields= ["category", "urgency", "targetPrice", "price"],
+    target_fields= ["approval"]
+)
+sklearn2pmml(pipeline, "order-approval.pmml")
