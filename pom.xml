@@ -12,7 +12,7 @@
     <version.org.kie>7.39.0.Final-redhat-00007</version.org.kie>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <junit-version>4.12</junit-version>
+    <junit-version>4.13.1</junit-version>
     <slf4j-version>1.7.7</slf4j-version>
     <logback.version>1.2.3</logback.version>
   </properties>
